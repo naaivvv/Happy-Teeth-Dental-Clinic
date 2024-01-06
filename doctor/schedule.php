@@ -424,7 +424,7 @@
                                         
                                          
                                          <th class="table-headin">
-                                             Patient Telephone
+                                             Patient Phone number
                                          </th>
                                          
                                  </thead>

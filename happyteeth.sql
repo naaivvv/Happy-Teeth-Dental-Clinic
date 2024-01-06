@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2024 at 04:40 PM
+-- Generation Time: Jan 06, 2024 at 05:59 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -59,7 +59,8 @@ CREATE TABLE `appointment` (
 
 INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`) VALUES
 (1, 1, 1, 1, '2022-06-03'),
-(3, 1, 2, 1, '2024-01-06');
+(3, 1, 2, 1, '2024-01-06'),
+(4, 4, 3, 1, '2024-01-06');
 
 -- --------------------------------------------------------
 
@@ -82,7 +83,8 @@ CREATE TABLE `doctor` (
 --
 
 INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `doctel`, `specialties`) VALUES
-(1, 'doctor@happyteeth.com', 'Test Doctor', '123', '000000000', '0110000000', 1);
+(1, 'doctor@happyteeth.com', 'Test Doctor', '123', '000000000', '09321654987', 1),
+(2, 'jasheen07@gmail.com', 'Jasonn', '09123456789', '000210124', '09510561678', 18);
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,7 @@ CREATE TABLE `patient` (
   `pname` varchar(255) DEFAULT NULL,
   `ppassword` varchar(255) DEFAULT NULL,
   `paddress` varchar(255) DEFAULT NULL,
-  `pnic` varchar(15) DEFAULT NULL,
+  `pnic` varchar(25) DEFAULT NULL,
   `pdob` date DEFAULT NULL,
   `ptel` varchar(15) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -106,9 +108,10 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`) VALUES
-(1, 'patient@happyteeth.com', 'Test Patient', '123', 'Sri Lanka', '0000000000', '2000-01-01', '0120000000'),
-(2, 'emhashenudara@gmail.com', 'Hashen Udara', '123', 'Sri Lanka', '0110000000', '2022-06-03', '0700000000'),
-(3, 'test2@gmail.com', 'test2 test2', 'test2', 'test2', '00002222', '2002-07-22', '0945612378');
+(1, 'patient@happyteeth.com', 'Test Patient', '123', 'Sri Lanka', '0000000000', '2000-01-01', '09789456123'),
+(2, 'emhashenudara@gmail.com', 'Hashen Udara', '123', 'Sri Lanka', '0110000000', '2022-06-03', '09654978123'),
+(3, 'test2@gmail.com', 'test2 test2', 'test2', 'test2', '00002222', '2002-07-22', '0945612378'),
+(4, 'jasonp@gmail.com', 'Jason Pascual', 'jason', 'Catabla Baybay, Zone 3', '000210123', '2002-01-01', '0712345678');
 
 -- --------------------------------------------------------
 
@@ -137,7 +140,8 @@ INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `schedul
 (5, '1', '1', '2022-06-10', '20:35:00', 1),
 (6, '1', '12', '2022-06-10', '20:35:00', 1),
 (7, '1', '1', '2022-06-24', '20:36:00', 1),
-(8, '1', '12', '2022-06-10', '13:33:00', 1);
+(8, '1', '12', '2022-06-10', '13:33:00', 1),
+(9, '2', 'Sessioning', '2024-01-08', '14:13:00', 1);
 
 -- --------------------------------------------------------
 
@@ -155,62 +159,9 @@ CREATE TABLE `specialties` (
 --
 
 INSERT INTO `specialties` (`id`, `sname`) VALUES
-(1, 'Accident and emergency medicine'),
-(2, 'Allergology'),
-(3, 'Anaesthetics'),
-(4, 'Biological hematology'),
-(5, 'Cardiology'),
-(6, 'Child psychiatry'),
-(7, 'Clinical biology'),
-(8, 'Clinical chemistry'),
-(9, 'Clinical neurophysiology'),
-(10, 'Clinical radiology'),
-(11, 'Dental, oral and maxillo-facial surgery'),
-(12, 'Dermato-venerology'),
-(13, 'Dermatology'),
-(14, 'Endocrinology'),
-(15, 'Gastro-enterologic surgery'),
-(16, 'Gastroenterology'),
-(17, 'General hematology'),
-(18, 'General Practice'),
-(19, 'General surgery'),
-(20, 'Geriatrics'),
-(21, 'Immunology'),
-(22, 'Infectious diseases'),
-(23, 'Internal medicine'),
-(24, 'Laboratory medicine'),
-(25, 'Maxillo-facial surgery'),
-(26, 'Microbiology'),
-(27, 'Nephrology'),
-(28, 'Neuro-psychiatry'),
-(29, 'Neurology'),
-(30, 'Neurosurgery'),
-(31, 'Nuclear medicine'),
-(32, 'Obstetrics and gynecology'),
-(33, 'Occupational medicine'),
-(34, 'Ophthalmology'),
-(35, 'Orthopaedics'),
-(36, 'Otorhinolaryngology'),
-(37, 'Paediatric surgery'),
-(38, 'Paediatrics'),
-(39, 'Pathology'),
-(40, 'Pharmacology'),
-(41, 'Physical medicine and rehabilitation'),
-(42, 'Plastic surgery'),
-(43, 'Podiatric Medicine'),
-(44, 'Podiatric Surgery'),
-(45, 'Psychiatry'),
-(46, 'Public health and Preventive Medicine'),
-(47, 'Radiology'),
-(48, 'Radiotherapy'),
-(49, 'Respiratory medicine'),
-(50, 'Rheumatology'),
-(51, 'Stomatology'),
-(52, 'Thoracic surgery'),
-(53, 'Tropical medicine'),
-(54, 'Urology'),
-(55, 'Vascular surgery'),
-(56, 'Venereology');
+(1, 'General Dentistry'),
+(2, 'Orthodontics'),
+(3, 'Aesthetic Dentistry');
 
 -- --------------------------------------------------------
 
@@ -232,7 +183,9 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('doctor@happyteeth.com', 'd'),
 ('patient@happyteeth.com', 'p'),
 ('emhashenudara@gmail.com', 'p'),
-('test2@gmail.com', 'p');
+('test2@gmail.com', 'p'),
+('jasonp@gmail.com', 'p'),
+('jasheen07@gmail.com', 'd');
 
 --
 -- Indexes for dumped tables
@@ -292,25 +245,25 @@ ALTER TABLE `webuser`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `docid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `docid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

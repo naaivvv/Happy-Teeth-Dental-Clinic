@@ -247,13 +247,13 @@
                                 <th class="table-headin">
                                     
                                 
-                                    NIC
+                                Philsys ID
                                     
                                 </th>
                                 <th class="table-headin">
                                 
                             
-                                Telephone
+                                Phone number
                                 
                                 </th>
                                 <th class="table-headin">
@@ -417,7 +417,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">NIC: </label>
+                                    <label for="nic" class="form-label">Philsys ID: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -427,7 +427,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Tele" class="form-label">Telephone: </label>
+                                    <label for="Tele" class="form-label">Phone number: </label>
                                 </td>
                             </tr>
                             <tr>

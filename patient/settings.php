@@ -289,7 +289,7 @@
                         <h2></h2>
                         <a class="close" href="settings.php">&times;</a>
                         <div class="content">
-                            eDoc Web App<br>
+                            Happyteeth Web App<br>
                             
                         </div>
                         <div style="display: flex;justify-content: center;">
@@ -325,7 +325,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">NIC: </label>
+                                    <label for="nic" class="form-label">Philsys ID: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -335,7 +335,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Tele" class="form-label">Telephone: </label>
+                                    <label for="Tele" class="form-label">Phone number: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -457,22 +457,22 @@
                                     
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="nic" class="form-label">NIC: </label>
+                                            <label for="nic" class="form-label">Philsys ID: </label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="nic" class="input-text" placeholder="NIC Number" value="'.$nic.'" required><br>
+                                            <input type="text" name="nic" class="input-text" placeholder="Philsys ID" value="'.$nic.'" required><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="Tele" class="form-label">Telephone: </label>
+                                            <label for="Tele" class="form-label">Phone number: </label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="tel" name="Tele" class="input-text" placeholder="Telephone Number" value="'.$tele.'" required><br>
+                                            <input type="tel" name="Tele" class="input-text" placeholder="Phone number" value="'.$tele.'" required><br>
                                         </td>
                                     </tr>
                                     <tr>
