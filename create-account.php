@@ -48,7 +48,6 @@ if($_POST){
     $lname=$_SESSION['personal']['lname'];
     $name=$fname." ".$lname;
     $address=$_SESSION['personal']['address'];
-    $nic=$_SESSION['personal']['nic'];
     $dob=$_SESSION['personal']['dob'];
     $email=$_POST['newemail'];
     $tele=$_POST['tele'];
@@ -65,10 +64,10 @@ if($_POST){
             $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>';
         }else{
             //TODO
-            $database->query("insert into patient(pemail,pname,ppassword, paddress, pnic,pdob,ptel) values('$email','$name','$newpassword','$address','$nic','$dob','$tele');");
+            $database->query("insert into patient(pemail,pname,ppassword, paddress,pdob,ptel) values('$email','$name','$newpassword','$address','$dob','$tele');");
             $database->query("insert into webuser values('$email','p')");
 
-            //print_r("insert into patient values($pid,'$email','$fname','$lname','$newpassword','$address','$nic','$dob','$tele');");
+            //print_r("insert into patient values($pid,'$email','$fname','$lname','$newpassword','$address','$dob','$tele');");
             $_SESSION["user"]=$email;
             $_SESSION["usertype"]="p";
             $_SESSION["username"]=$fname;
@@ -91,6 +90,23 @@ if($_POST){
 
 ?>
 
+<table border="0" class="nav-fixed-lr">
+            <tr>
+                <td width="88%" class="lr-head-logo">
+                    <font class="edoc-logo">Happy Teeth Dental Clinic </font>
+                    <font class="edoc-logo-sub">| DENTAL CARE SPECIALISTS</font>
+                </td>
+                <td width="4%">
+                   <a href="index.html"  class="non-style-link"><p class="nav-item">HOME</p></a>
+                </td>
+                <td width="4%">
+                   <a href="login.php"  class="non-style-link"><p class="nav-item">LOGIN</p></a>
+                </td>
+                <td  width="4%">
+                    <a href="signup.php" class="non-style-link"><p class="nav-item" style="padding-right: 10px;">REGISTER</p></a>
+                </td>
+            </tr>
+</table>
 
     <center>
     <div class="container">
@@ -135,12 +151,12 @@ if($_POST){
             </tr>
             <tr>
                 <td class="label-td" colspan="2">
-                    <label for="cpassword" class="form-label">Conform Password: </label>
+                    <label for="cpassword" class="form-label">Confirm Password: </label>
                 </td>
             </tr>
             <tr>
                 <td class="label-td" colspan="2">
-                    <input type="password" name="cpassword" class="input-text" placeholder="Conform Password" required>
+                    <input type="password" name="cpassword" class="input-text" placeholder="Confirm Password" required>
                 </td>
             </tr>
      
@@ -175,6 +191,7 @@ if($_POST){
         </table>
 
     </div>
+    <p class="sub-text2 footer-hashen">A Web Solution by Cueva, Libo-on, Trinidad.</p>
 </center>
 </body>
 </html>

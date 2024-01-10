@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2024 at 05:59 PM
+-- Generation Time: Jan 10, 2024 at 11:37 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -73,7 +73,6 @@ CREATE TABLE `doctor` (
   `docemail` varchar(255) DEFAULT NULL,
   `docname` varchar(255) DEFAULT NULL,
   `docpassword` varchar(255) DEFAULT NULL,
-  `docnic` varchar(15) DEFAULT NULL,
   `doctel` varchar(15) DEFAULT NULL,
   `specialties` int(2) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -82,9 +81,9 @@ CREATE TABLE `doctor` (
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `doctel`, `specialties`) VALUES
-(1, 'doctor@happyteeth.com', 'Test Doctor', '123', '000000000', '09321654987', 1),
-(2, 'jasheen07@gmail.com', 'Jasonn', '09123456789', '000210124', '09510561678', 18);
+INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `doctel`, `specialties`) VALUES
+(1, 'doctor@happyteeth.com', 'Test Doctor', '123', '09321654987', 1),
+(3, 'testnew@happyfeet.com', 'testnew', '123', '09123456789', 6);
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,6 @@ CREATE TABLE `patient` (
   `pname` varchar(255) DEFAULT NULL,
   `ppassword` varchar(255) DEFAULT NULL,
   `paddress` varchar(255) DEFAULT NULL,
-  `pnic` varchar(25) DEFAULT NULL,
   `pdob` date DEFAULT NULL,
   `ptel` varchar(15) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -107,11 +105,10 @@ CREATE TABLE `patient` (
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`) VALUES
-(1, 'patient@happyteeth.com', 'Test Patient', '123', 'Sri Lanka', '0000000000', '2000-01-01', '09789456123'),
-(2, 'emhashenudara@gmail.com', 'Hashen Udara', '123', 'Sri Lanka', '0110000000', '2022-06-03', '09654978123'),
-(3, 'test2@gmail.com', 'test2 test2', 'test2', 'test2', '00002222', '2002-07-22', '0945612378'),
-(4, 'jasonp@gmail.com', 'Jason Pascual', 'jason', 'Catabla Baybay, Zone 3', '000210123', '2002-01-01', '0712345678');
+INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pdob`, `ptel`) VALUES
+(1, 'patient@happyteeth.com', 'Test Patient', '123', 'Talisay City', '2000-01-01', '09789456123'),
+(3, 'test2@gmail.com', 'test2 test2', 'test2', 'test2', '2002-07-22', '0945612378'),
+(4, 'jasonp@gmail.com', 'Jason Pascual', 'jason', 'Catabla Baybay, Zone 3', '2002-01-01', '0712345678');
 
 -- --------------------------------------------------------
 
@@ -151,7 +148,7 @@ INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `schedul
 
 CREATE TABLE `specialties` (
   `id` int(2) NOT NULL,
-  `sname` varchar(50) DEFAULT NULL
+  `sname` varchar(60) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
@@ -161,7 +158,11 @@ CREATE TABLE `specialties` (
 INSERT INTO `specialties` (`id`, `sname`) VALUES
 (1, 'General Dentistry'),
 (2, 'Orthodontics'),
-(3, 'Aesthetic Dentistry');
+(3, 'Aesthetic Dentistry'),
+(7, 'General Dentistry, Orthodontics, Aesthetic Dentistry'),
+(5, 'General Dentistry, Aesthetic Dentistry'),
+(4, 'General Dentistry, Orthodontics'),
+(6, 'Orthodontics, Aesthetic Dentistry');
 
 -- --------------------------------------------------------
 
@@ -185,7 +186,7 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('emhashenudara@gmail.com', 'p'),
 ('test2@gmail.com', 'p'),
 ('jasonp@gmail.com', 'p'),
-('jasheen07@gmail.com', 'd');
+('testnew@happyfeet.com', 'd');
 
 --
 -- Indexes for dumped tables
@@ -251,7 +252,7 @@ ALTER TABLE `appointment`
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `docid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `docid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `patient`

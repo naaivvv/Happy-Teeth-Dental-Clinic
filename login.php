@@ -113,9 +113,25 @@
     }
 
     ?>
-
-
-
+<div>
+<table border="0" class="nav-fixed-lr">
+            <tr>
+                <td width="88%" class="lr-head-logo">
+                    <font class="edoc-logo">Happy Teeth Dental Clinic </font>
+                    <font class="edoc-logo-sub">| DENTAL CARE SPECIALISTS</font>
+                </td>
+                <td width="4%">
+                   <a href="index.html"  class="non-style-link"><p class="nav-item">HOME</p></a>
+                </td>
+                <td width="4%">
+                   <a href="login.php"  class="non-style-link"><p class="nav-item">LOGIN</p></a>
+                </td>
+                <td  width="4%">
+                    <a href="signup.php" class="non-style-link"><p class="nav-item" style="padding-right: 10px;">REGISTER</p></a>
+                </td>
+            </tr>
+</table>
+</div>
 
 
     <center>
@@ -184,6 +200,7 @@
         </table>
 
     </div>
+    <p class="sub-text2 footer-hashen">A Web Solution by Cueva, Libo-on, Trinidad.</p>
 </center>
 </body>
 </html>

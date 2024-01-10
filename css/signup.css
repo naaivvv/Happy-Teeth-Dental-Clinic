@@ -8,7 +8,7 @@ body{
     background-color: white;
     border: 1px solid rgb(235, 235, 235);
     border-radius: 8px;
-    margin: 0;
+    margin: 135px 0 0 0;
     padding: 0;
     box-shadow: 0 3px 5px 0 rgba(240, 240, 240, 0.3);
     animation: transitionIn-Y-over 0.5s;
@@ -54,4 +54,58 @@ td{
     margin-top: 15px;
     margin-bottom: 15px;
     width: 100%;
+}
+
+.edoc-logo{
+    color: black;
+    font-weight: bolder;
+    font-size: 20px;
+    padding-left: 20px;
+    animation: transitionIn-Y-over 0.5s;
+}
+
+.edoc-logo-sub{
+    color: rgba(32, 32, 32, 0.733);
+    font-size: 12px;
+
+}
+
+
+.nav-item{
+    color: rgba(32, 32, 32, 0.733);
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    animation: transitionIn-Y-over 0.5s;
+}
+
+.nav-item:hover{
+    color: #131212;
+
+}
+.nav-fixed-lr {
+    width:100%;
+    position:absolute !important;
+    top:0;
+    left:0;
+}
+
+.lr-head-logo {
+    text-align:left;
+}
+
+.sub-text2{
+    color: rgba(32, 32, 32, 0.733);
+    font-size: 17px;
+    line-height: 27px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 0;
+}
+.footer-hashen{
+    position: absolute;
+    bottom: 0;
+    left: 45%;
+    font-size: 13px;
+    animation: transitionIn-Y-over 0.5s;
 }

@@ -38,7 +38,6 @@ if($_POST){
         'fname'=>$_POST['fname'],
         'lname'=>$_POST['lname'],
         'address'=>$_POST['address'],
-        'nic'=>$_POST['nic'],
         'dob'=>$_POST['dob']
     );
 
@@ -53,6 +52,23 @@ if($_POST){
 
 ?>
 
+<table border="0" class="nav-fixed-lr">
+            <tr>
+                <td width="88%" class="lr-head-logo">
+                    <font class="edoc-logo">Happy Teeth Dental Clinic </font>
+                    <font class="edoc-logo-sub">| DENTAL CARE SPECIALISTS</font>
+                </td>
+                <td width="4%">
+                   <a href="index.html"  class="non-style-link"><p class="nav-item">HOME</p></a>
+                </td>
+                <td width="4%">
+                   <a href="login.php"  class="non-style-link"><p class="nav-item">LOGIN</p></a>
+                </td>
+                <td  width="4%">
+                    <a href="signup.php" class="non-style-link"><p class="nav-item" style="padding-right: 10px;">REGISTER</p></a>
+                </td>
+            </tr>
+</table>
 
     <center>
     <div class="container">
@@ -85,16 +101,6 @@ if($_POST){
             <tr>
                 <td class="label-td" colspan="2">
                     <input type="text" name="address" class="input-text" placeholder="Address" required>
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <label for="nic" class="form-label">Philsys ID: </label>
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <input type="text" name="nic" class="input-text" placeholder="Philsys ID" required>
                 </td>
             </tr>
             <tr>
@@ -135,6 +141,7 @@ if($_POST){
         </table>
 
     </div>
+    <p class="sub-text2 footer-hashen">A Web Solution by Cueva, Libo-on, Trinidad.</p>
 </center>
 </body>
 </html>
