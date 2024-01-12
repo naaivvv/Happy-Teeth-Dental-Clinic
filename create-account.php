@@ -191,7 +191,9 @@ if($_POST){
         </table>
 
     </div>
-    <p class="sub-text2 footer-hashen">A Web Solution by Cueva, Libo-on, Trinidad.</p>
+    <div class="footer-clt">
+        <p class="sub-text2 footer-clt-content">A Web Solution by Cueva, Libo-on, Trinidad.</p>
+    </div>
 </center>
 </body>
 </html>

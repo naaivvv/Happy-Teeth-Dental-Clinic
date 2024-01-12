@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2024 at 11:37 AM
+-- Generation Time: Jan 12, 2024 at 10:39 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -59,8 +59,12 @@ CREATE TABLE `appointment` (
 
 INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`) VALUES
 (1, 1, 1, 1, '2022-06-03'),
-(3, 1, 2, 1, '2024-01-06'),
-(4, 4, 3, 1, '2024-01-06');
+(3, 1, 2, 1, '2024-01-15'),
+(4, 4, 3, 1, '2024-01-06'),
+(6, 1, 1, 10, '2024-01-11'),
+(7, 1, 4, 1, '2024-01-12'),
+(8, 1, 5, 1, '2024-01-12'),
+(9, 1, 1, 11, '2024-01-12');
 
 -- --------------------------------------------------------
 
@@ -83,7 +87,7 @@ CREATE TABLE `doctor` (
 
 INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `doctel`, `specialties`) VALUES
 (1, 'doctor@happyteeth.com', 'Test Doctor', '123', '09321654987', 1),
-(3, 'testnew@happyfeet.com', 'testnew', '123', '09123456789', 6);
+(3, 'testnew@happyfeet.com', 'testnew', '123', '09123456789', 1);
 
 -- --------------------------------------------------------
 
@@ -130,15 +134,10 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`) VALUES
-(1, '1', 'Test Session', '2050-01-01', '18:00:00', 50),
-(2, '1', '1', '2022-06-10', '20:36:00', 1),
-(3, '1', '12', '2022-06-10', '20:33:00', 1),
-(4, '1', '1', '2022-06-10', '12:32:00', 1),
-(5, '1', '1', '2022-06-10', '20:35:00', 1),
-(6, '1', '12', '2022-06-10', '20:35:00', 1),
-(7, '1', '1', '2022-06-24', '20:36:00', 1),
-(8, '1', '12', '2022-06-10', '13:33:00', 1),
-(9, '2', 'Sessioning', '2024-01-08', '14:13:00', 1);
+(1, '1', 'Test Session', '2024-02-01', '18:00:00', 50),
+(11, '1', 'Test Individual', '2024-01-30', '20:00:00', 1),
+(9, '2', 'Sessioning', '2024-01-08', '14:13:00', 1),
+(10, '3', 'Dental Check ups', '2024-01-10', '09:00:00', 20);
 
 -- --------------------------------------------------------
 
@@ -246,7 +245,7 @@ ALTER TABLE `webuser`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -264,7 +263,7 @@ ALTER TABLE `patient`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -213,25 +213,18 @@
                         }
                         //echo $sqlpt2;
                         //echo $sqlpt1;
-                        $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid";
-                        $sqllist=array($sqlpt1,$sqlpt2);
-                        $sqlkeywords=array(" where "," and ");
-                        $key2=0;
-                        foreach($sqllist as $key){
-
-                            if(!empty($key)){
-                                $sqlmain.=$sqlkeywords[$key2].$key;
+                        $sqlmain = "SELECT appointment.appoid, schedule.scheduleid, schedule.title, doctor.docname, patient.pname, schedule.scheduledate, schedule.scheduletime, appointment.apponum, appointment.appodate FROM schedule INNER JOIN appointment ON schedule.scheduleid = appointment.scheduleid INNER JOIN patient ON patient.pid = appointment.pid INNER JOIN doctor ON schedule.docid = doctor.docid";
+                        $sqllist = array($sqlpt1, $sqlpt2);
+                        $sqlkeywords = array(" WHERE ", " AND ");
+                        $key2 = 0;
+                        foreach ($sqllist as $key) {
+                            if (!empty($key)) {
+                                $sqlmain .= $sqlkeywords[$key2] . $key;
                                 $key2++;
                             };
                         };
-                        //echo $sqlmain;
-
-                        
-                        
-                        //
-                    }else{
-                        $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  order by schedule.scheduledate desc";
-
+                    } else {
+                        $sqlmain = "SELECT appointment.appoid, schedule.scheduleid, schedule.title, doctor.docname, patient.pname, schedule.scheduledate, schedule.scheduletime, appointment.apponum, appointment.appodate FROM schedule INNER JOIN appointment ON schedule.scheduleid = appointment.scheduleid INNER JOIN patient ON patient.pid = appointment.pid INNER JOIN doctor ON schedule.docid = doctor.docid  ORDER BY schedule.scheduledate ASC";
                     }
 
 
@@ -286,76 +279,59 @@
                         <tbody>
                         
                             <?php
+                                $result = $database->query($sqlmain);
 
-                                
-                                $result= $database->query($sqlmain);
-
-                                if($result->num_rows==0){
+                                if ($result->num_rows == 0) {
                                     echo '<tr>
-                                    <td colspan="7">
-                                    <br><br><br><br>
-                                    <center>
-                                    <img src="../img/notfound.svg" width="25%">
-                                    
-                                    <br>
-                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="appointment.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Appointments &nbsp;</font></button>
-                                    </a>
-                                    </center>
-                                    <br><br><br><br>
-                                    </td>
-                                    </tr>';
-                                    
-                                }
-                                else{
-                                for ( $x=0; $x<$result->num_rows;$x++){
-                                    $row=$result->fetch_assoc();
-                                    $appoid=$row["appoid"];
-                                    $scheduleid=$row["scheduleid"];
-                                    $title=$row["title"];
-                                    $docname=$row["docname"];
-                                    $scheduledate=$row["scheduledate"];
-                                    $scheduletime=$row["scheduletime"];
-                                    $pname=$row["pname"];
-                                    $apponum=$row["apponum"];
-                                    $appodate=$row["appodate"];
-                                    echo '<tr >
-                                        <td style="font-weight:600;"> &nbsp;'.
-                                        
-                                        substr($pname,0,25)
-                                        .'</td >
-                                        <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
-                                        '.$apponum.'
-                                        
-                                        </td>
-                                        <td>
-                                        '.substr($docname,0,25).'
-                                        </td>
-                                        <td>
-                                        '.substr($title,0,15).'
-                                        </td>
-                                        <td style="text-align:center;font-size:12px;">
-                                            '.substr($scheduledate,0,10).' <br>'.substr($scheduletime,0,5).'
-                                        </td>
-                                        
-                                        <td style="text-align:center;">
-                                            '.$appodate.'
-                                        </td>
+                                            <td colspan="7">
+                                                <br><br><br><br>
+                                                <center>
+                                                    <img src="../img/notfound.svg" width="25%">
+                                                    <br>
+                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We couldn\'t find anything related to your keywords!</p>
+                                                    <a class="non-style-link" href="appointment.php"><button class="login-btn btn-primary-soft btn" style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Appointments &nbsp;</font></button></a>
+                                                </center>
+                                                <br><br><br><br>
+                                            </td>
+                                        </tr>';
+                                } else {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $appoid = $row["appoid"];
+                                        $scheduleid = $row["scheduleid"];
+                                        $title = $row["title"];
+                                        $docname = $row["docname"];
+                                        $scheduledate = $row["scheduledate"];
+                                        $scheduletime = $row["scheduletime"];
+                                        $pname = $row["pname"];
+                                        $apponum = $row["apponum"];
+                                        $appodate = $row["appodate"];
 
-                                        <td>
-                                        <div style="display:flex;justify-content: center;">
-                                        
-                                        <!--<a href="?action=view&id='.$appoid.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;-->
-                                       <a href="?action=drop&id='.$appoid.'&name='.$pname.'&session='.$title.'&apponum='.$apponum.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;</div>
-                                        </td>
-                                    </tr>';
-                                    
+                                        // Check if appodate is greater than the current date
+                                        $currentDate = date("Y-m-d");
+                                        $isBookingEnded = ($appodate < $currentDate);
+
+                                        echo '<tr>
+                                                <td style="font-weight:600;"> &nbsp;' . substr($pname, 0, 25) . '</td>
+                                                <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">' . $apponum . '</td>
+                                                <td>' . substr($docname, 0, 25) . '</td>
+                                                <td>' . substr($title, 0, 15) . '</td>
+                                                <td style="text-align:center;font-size:12px;">' . substr($scheduledate, 0, 10) . ' <br>' . substr($scheduletime, 0, 5) . '</td>
+                                                <td style="text-align:center;">' . $appodate . '</td>
+                                                <td>
+                                                    <div style="display:flex;justify-content: center;">';
+
+                                        if ($isBookingEnded) {
+                                            echo '<button class="btn-primary-gray-disabled btn-disabled button-icon btn-ended" style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;border:1px solid #b0b0b0 !important; border-radius:5px;" disabled><font class="tn-in-text">Ended</font></button>';
+                                        } else {
+                                            echo '<a href="?action=drop&id=' . $appoid . '&name=' . $pname . '&session=' . $title . '&apponum=' . $apponum . '" class="non-style-link"><button class="btn-primary-soft btn button-icon btn-delete" style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel</font></button></a>';
+                                        }
+
+                                        echo '&nbsp;&nbsp;&nbsp;</div>
+                                                </td>
+                                            </tr>';
+                                    }
                                 }
-                            }
-                                 
-                            ?>
+                                ?>
  
                             </tbody>
 

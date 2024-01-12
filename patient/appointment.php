@@ -54,7 +54,7 @@
 
 
     //TODO
-    $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  patient.pid=$userid ";
+    $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  patient.pid= '$userid' ";
 
     if($_POST){
         //print_r($_POST);
@@ -73,7 +73,7 @@
 
     }
 
-    $sqlmain.="order by appointment.appodate  asc";
+    $sqlmain.="order by appointment.appodate asc";
     $result= $database->query($sqlmain);
     ?>
     <div class="container">
@@ -218,82 +218,136 @@
                         
                         <tbody>
                         
-                            <?php
-
-                                
-                                
-
-                                if($result->num_rows==0){
-                                    echo '<tr>
-                                    <td colspan="7">
-                                    <br><br><br><br>
-                                    <center>
-                                    <img src="../img/notfound.svg" width="25%">
-                                    
-                                    <br>
-                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="appointment.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Appointments &nbsp;</font></button>
-                                    </a>
-                                    </center>
-                                    <br><br><br><br>
-                                    </td>
+                        <?php
+                            if ($result->num_rows == 0) {
+                                echo '<tr>
+                                        <td colspan="7">
+                                            <br><br><br><br>
+                                            <center>
+                                                <img src="../img/notfound.svg" width="25%">
+                                                <br>
+                                                <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We couldn\'t find anything related to your keywords!</p>
+                                                <a class="non-style-link" href="appointment.php"><button class="login-btn btn-primary-soft btn" style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Appointments &nbsp;</font></button></a>
+                                            </center>
+                                            <br><br><br><br>
+                                        </td>
                                     </tr>';
-                                    
-                                }
-                                else{
+                            } else {
+                                // Fetch all rows into an array
+                                $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-                                    for ( $x=0; $x<($result->num_rows);$x++){
-                                        echo "<tr>";
-                                        for($q=0;$q<3;$q++){
-                                            $row=$result->fetch_assoc();
-                                            if (!isset($row)){
-                                            break;
-                                            };
-                                            $scheduleid=$row["scheduleid"];
-                                            $title=$row["title"];
-                                            $docname=$row["docname"];
-                                            $scheduledate=$row["scheduledate"];
-                                            $scheduletime=$row["scheduletime"];
-                                            $apponum=$row["apponum"];
-                                            $appodate=$row["appodate"];
-                                            $appoid=$row["appoid"];
-    
-                                            if($scheduleid==""){
-                                                break;
-                                            }
-    
-                                            echo '
-                                            <td style="width: 25%;">
-                                                    <div  class="dashboard-items search-items"  >
-                                                    
-                                                        <div style="width:100%;">
-                                                        <div class="h3-search">
-                                                                    Booking Date: '.substr($appodate,0,30).'<br>
-                                                                    Reference Number: OC-000-'.$appoid.'
-                                                                </div>
-                                                                <div class="h1-search">
-                                                                    '.substr($title,0,21).'<br>
-                                                                </div>
-                                                                <div class="h3-search">
-                                                                    Appointment Number:<div class="h1-search">0'.$apponum.'</div>
-                                                                </div>
-                                                                <div class="h3-search">
-                                                                    '.substr($docname,0,30).'
-                                                                </div>
-                                                                
-                                                                
-                                                                <div class="h4-search">
-                                                                    Scheduled Date: '.$scheduledate.'<br>Starts: <b>@'.substr($scheduletime,0,5).'</b> (24h)
-                                                                </div>
-                                                                <br>
-                                                                <a href="?action=drop&id='.$appoid.'&title='.$title.'&doc='.$docname.'" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Cancel Booking</font></button></a>
-                                                        </div>
-                                                                
-                                                    </div>
-                                                </td>';
-    
-                                        }
-                                        echo "</tr>";
+                                // Separate future and past appointments
+                                $futureAppointments = [];
+                                $pastAppointments = [];
+
+                                foreach ($rows as $row) {
+                                    $appodate = $row["appodate"];
+                                    $currentDate = date("Y-m-d");
+
+                                    if ($appodate >= $currentDate) {
+                                        $futureAppointments[] = $row;
+                                    } else {
+                                        $pastAppointments[] = $row;
+                                    }
+                                }
+
+                                // Display label for Ongoing Booking
+                                if (!empty($futureAppointments)) {
+                                    echo '<tr>
+                                            <td colspan="7" style="text-align: center; font-weight: bold; font-size: 20px;">Ongoing Booking</td>
+                                        </tr>';
+                                }
+
+                                // Display future appointments first
+                                displayAppointments($futureAppointments);
+
+                                // Display label for Finished Booking
+                                if (!empty($pastAppointments)) {
+                                    echo '<tr>
+                                            <td colspan="7" style="text-align: center; font-weight: bold; font-size: 20px;">Finished Booking</td>
+                                        </tr>';
+                                }
+
+                                // Display past appointments at the end
+                                displayAppointments($pastAppointments);
+                            }
+
+                            // Function to display appointments
+                            function displayAppointments($appointments) {
+                                $count = 0;
+
+                                foreach ($appointments as $row) {
+                                    if ($count % 3 == 0) {
+                                        echo '<tr>';
+                                    }
+
+                                    displayAppointmentRow($row);
+
+                                    $count++;
+
+                                    if ($count % 3 == 0) {
+                                        echo '</tr>';
+                                    }
+                                }
+
+                                // Add empty cells to complete the row if needed
+                                while ($count % 3 != 0) {
+                                    echo '<td style="width: 25%;"></td>';
+                                    $count++;
+                                }
+                            }
+
+                            // Function to display appointment row
+                            function displayAppointmentRow($row) {
+                                $scheduleid = $row["scheduleid"];
+                                $title = $row["title"];
+                                $docname = $row["docname"];
+                                $scheduledate = $row["scheduledate"];
+                                $scheduletime = $row["scheduletime"];
+                                $apponum = $row["apponum"];
+                                $appodate = $row["appodate"];
+                                $appoid = $row["appoid"];
+
+                                // Check if appodate is greater than or equal to the current date
+                                $currentDate = date("Y-m-d");
+                                if ($appodate >= $currentDate) {
+                                    // Booking is still open
+                                    $bookNowButton = '<a href="?action=drop&id='.$appoid.'&title='.$title.'&doc='.$docname.'"><button class="login-btn btn-primary-soft btn" style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Cancel Booking</font></button></a>';
+                                    $label = '<div style="text-align: center; font-weight: bold; font-size: 14px; margin-bottom:5px;">Ongoing Booking</div>';
+                                } else {
+                                    // Booking has ended
+                                    $bookNowButton = '<button class="btn-primary-gray-disabled btn-disabled" style="padding-top:11px;padding-bottom:11px;width:100%" disabled><font class="tn-in-text">Booking Ended</font></button>';
+                                    $label = '<div style="text-align: center; font-weight: bold; font-size: 14px; margin-bottom:5px;">Finished Booking</div>';
+                                }
+
+                                echo '
+                                    <td style="width: 25%;">
+                                        <div class="dashboard-items search-items">
+                                            <div style="width:100%;">
+                                                ' . $label . '
+                                                <div class="h3-search">
+                                                    Booking Date: '.substr($appodate, 0, 30).'<br>
+                                                    Reference Number: OC-000-'.$appoid.'
+                                                </div>
+                                                <div class="h1-search">
+                                                    '.substr($title, 0, 21).'<br>
+                                                </div>
+                                                <div class="h3-search">
+                                                    Appointment Number:<div class="h1-search">0'.$apponum.'</div>
+                                                </div>
+                                                <div class="h3-search">
+                                                    '.substr($docname, 0, 30).'
+                                                </div>
+                                                <div class="h4-search">
+                                                    Scheduled Date: '.$scheduledate.'<br>Starts: <b>@'.substr($scheduletime, 0, 5).'</b> (24h)
+                                                </div>
+                                                <br>
+                                                '.$bookNowButton.'
+                                            </div>
+                                        </div>
+                                    </td>';
+
+
                            
                                 // for ( $x=0; $x<$result->num_rows;$x++){
                                 //     $row=$result->fetch_assoc();
@@ -336,9 +390,7 @@
                                 //         </td>
                                 //     </tr>';
                                     
-                                }
-                            }
-                                 
+                                }  
                             ?>
  
                             </tbody>

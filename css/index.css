@@ -78,10 +78,17 @@ table{
 
 }
 
-.footer-hashen{
+.footer-clt{
     position: absolute;
     bottom: 0;
-    left: 45%;
-    font-size: 13px;
     animation: transitionIn-Y-over 0.5s;
+    width: 100%;
+}
+
+.footer-clt-content {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 13px !important;
 }
