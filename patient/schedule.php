@@ -106,7 +106,16 @@
         </div>
         <?php
 
-                $sqlmain= "select * from schedule inner join doctor on schedule.docid=doctor.docid where schedule.scheduledate>='$today'  order by schedule.scheduledate asc";
+                $sqlmain= "SELECT schedule.scheduleid, schedule.title, doctor.docname, schedule.scheduledate, schedule.scheduletime,
+                COUNT(appointment.scheduleid) AS nop,
+                schedule.nop AS total_nop
+                FROM schedule
+                INNER JOIN doctor ON schedule.docid = doctor.docid
+                LEFT JOIN appointment ON schedule.scheduleid = appointment.scheduleid
+                WHERE schedule.scheduledate >= '$today'
+                GROUP BY schedule.scheduleid
+                HAVING nop < schedule.nop
+                ORDER BY schedule.scheduledate ASC";
                 $sqlpt1="";
                 $insertkey="";
                 $q='';
@@ -240,46 +249,45 @@
                                 }
                                 else{
                                     //echo $result->num_rows;
-                                for ( $x=0; $x<($result->num_rows);$x++){
-                                    echo "<tr>";
-                                    for($q=0;$q<3;$q++){
-                                        $row=$result->fetch_assoc();
-                                        if (!isset($row)){
-                                            break;
-                                        };
-                                        $scheduleid=$row["scheduleid"];
-                                        $title=$row["title"];
-                                        $docname=$row["docname"];
-                                        $scheduledate=$row["scheduledate"];
-                                        $scheduletime=$row["scheduletime"];
-
-                                        if($scheduleid==""){
-                                            break;
-                                        }
-
-                                        echo '
-                                        <td style="width: 25%;">
+                                    for ($x=0; $x<($result->num_rows);$x++){
+                                        echo "<tr>";
+                                        for($q=0;$q<3;$q++){
+                                            $row=$result->fetch_assoc();
+                                            if (!isset($row)){
+                                                break;
+                                            };
+                                            $scheduleid=$row["scheduleid"];
+                                            $title=$row["title"];
+                                            $docname=$row["docname"];
+                                            $scheduledate=$row["scheduledate"];
+                                            $scheduletime=$row["scheduletime"];
+                                
+                                            if($scheduleid==""){
+                                                break;
+                                            }
+                                
+                                            echo '
+                                            <td style="width: 25%;">
                                                 <div  class="dashboard-items search-items"  >
-                                                
+                                                    
                                                     <div style="width:100%">
-                                                            <div class="h1-search">
-                                                                '.substr($title,0,21).'
-                                                            </div><br>
-                                                            <div class="h3-search">
-                                                                '.substr($docname,0,30).'
-                                                            </div>
-                                                            <div class="h4-search">
-                                                                '.$scheduledate.'<br>Starts: <b>@'.substr($scheduletime,0,5).'</b> (24h)
-                                                            </div>
-                                                            <br>
-                                                            <a href="booking.php?id='.$scheduleid.'" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Book Now</font></button></a>
+                                                        <div class="h1-search">
+                                                            '.substr($title,0,21).'
+                                                        </div><br>
+                                                        <div class="h3-search">
+                                                            '.substr($docname,0,30).'
+                                                        </div>
+                                                        <div class="h4-search">
+                                                            '.$scheduledate.'<br>Starts: <b>@'.substr($scheduletime,0,5).'</b> (24h)
+                                                        </div>
+                                                        <br>
+                                                        <a href="booking.php?id='.$scheduleid.'" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Book Now</font></button></a>
                                                     </div>
-                                                            
+                                                        
                                                 </div>
                                             </td>';
-
-                                    }
-                                    echo "</tr>";
+                                        }
+                                        echo "</tr>";
                                     
                                     
                                     // echo '<tr>

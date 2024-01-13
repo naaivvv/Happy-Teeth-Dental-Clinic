@@ -25,25 +25,24 @@
 
     session_start();
 
-    if(isset($_SESSION["user"])){
-        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='d'){
+    if (isset($_SESSION["user"])) {
+        if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'd') {
             header("location: ../login.php");
-        }else{
-            $useremail=$_SESSION["user"];
+        } else {
+            $useremail = $_SESSION["user"];
         }
-
-    }else{
+    } else {
         header("location: ../login.php");
     }
     
+    // Import database
+    include("../connection.php");
     
-
-       //import database
-       include("../connection.php");
-       $userrow = $database->query("select * from doctor where docemail='$useremail'");
-       $userfetch=$userrow->fetch_assoc();
-       $userid= $userfetch["docid"];
-       $username=$userfetch["docname"];
+    // Get doctor information
+    $userrow = $database->query("select * from doctor where docemail='$useremail'");
+    $userfetch = $userrow->fetch_assoc();
+    $userid = $userfetch["docid"];
+    $username = $userfetch["docname"];
     //echo $userid;
     ?>
     <div class="container">
@@ -182,7 +181,12 @@
                 <?php
 
 
-                    $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid ";
+                $sqlmain = "SELECT appointment.appoid, schedule.scheduleid, schedule.title, patient.pname, schedule.scheduledate, schedule.scheduletime, appointment.apponum, appointment.appodate
+                FROM schedule
+                INNER JOIN appointment ON schedule.scheduleid = appointment.scheduleid
+                INNER JOIN patient ON patient.pid = appointment.pid
+                WHERE schedule.docid = '$userid'
+                ORDER BY CASE WHEN schedule.scheduledate >= CURRENT_DATE THEN 0 ELSE 1 END, schedule.scheduledate ASC";
 
                     if($_POST){
                         //print_r($_POST);
@@ -250,66 +254,59 @@
                             <?php
 
                                 
-                                $result= $database->query($sqlmain);
+                                $result = $database->query($sqlmain);
 
-                                if($result->num_rows==0){
+                                if ($result->num_rows == 0) {
                                     echo '<tr>
-                                    <td colspan="7">
-                                    <br><br><br><br>
-                                    <center>
-                                    <img src="../img/notfound.svg" width="25%">
-                                    
-                                    <br>
-                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="appointment.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Appointments &nbsp;</font></button>
-                                    </a>
-                                    </center>
-                                    <br><br><br><br>
-                                    </td>
-                                    </tr>';
-                                    
-                                }
-                                else{
-                                for ( $x=0; $x<$result->num_rows;$x++){
-                                    $row=$result->fetch_assoc();
-                                    $appoid=$row["appoid"];
-                                    $scheduleid=$row["scheduleid"];
-                                    $title=$row["title"];
-                                    $docname=$row["docname"];
-                                    $scheduledate=$row["scheduledate"];
-                                    $scheduletime=$row["scheduletime"];
-                                    $pname=$row["pname"];
-                                    $apponum=$row["apponum"];
-                                    $appodate=$row["appodate"];
-                                    echo '<tr >
-                                        <td style="font-weight:600;"> &nbsp;'.
+                                            <td colspan="6">
+                                                <br><br><br><br>
+                                                <center>
+                                                    <img src="../img/notfound.svg" width="25%">
+                                                    <br>
+                                                    <p class="heading-main12" style="margin-left: 45px; font-size: 20px; color: rgb(49, 49, 49)">We couldn\'t find anything related to your appointments!</p>
+                                                    <a class="non-style-link" href="appointment.php"><button class="login-btn btn-primary-soft btn" style="display: flex; justify-content: center; align-items: center; margin-left: 20px;">&nbsp; Show all Appointments &nbsp;</font></button></a>
+                                                </center>
+                                                <br><br><br><br>
+                                            </td>
+                                        </tr>';
+                                } else {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $appoid = $row["appoid"];
+                                        $scheduleid = $row["scheduleid"];
+                                        $title = $row["title"];
+                                        $pname = $row["pname"];
+                                        $scheduledate = $row["scheduledate"];
+                                        $scheduletime = $row["scheduletime"];
+                                        $apponum = $row["apponum"];
+                                        $appodate = $row["appodate"];
+                                
+                                        // Check if scheduledate is past the current date
+                                        $isPastDate = ($scheduledate < date("Y-m-d"));
                                         
-                                        substr($pname,0,25)
-                                        .'</td >
-                                        <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
-                                        '.$apponum.'
-                                        
-                                        </td>
-                                        <td>
-                                        '.substr($title,0,15).'
-                                        </td>
-                                        <td style="text-align:center;;">
-                                            '.substr($scheduledate,0,10).' @'.substr($scheduletime,0,5).'
-                                        </td>
-                                        
-                                        <td style="text-align:center;">
-                                            '.$appodate.'
-                                        </td>
-
-                                        <td>
-                                        <div style="display:flex;justify-content: center;">
-                                        
-                                        <!--<a href="?action=view&id='.$appoid.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;-->
-                                       <a href="?action=drop&id='.$appoid.'&name='.$pname.'&session='.$title.'&apponum='.$apponum.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;</div>
-                                        </td>
-                                    </tr>';
+                                        echo '<tr>
+                                                <td style="font-weight: 600;">&nbsp;' . substr($pname, 0, 25) . '</td>
+                                                <td style="text-align: center; font-size: 23px; font-weight: 500; color: var(--btnnicetext);">' . $apponum . '</td>
+                                                <td>' . substr($title, 0, 15) . '</td>
+                                                <td style="text-align: center;">' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletime, 0, 5) . '</td>
+                                                <td style="text-align: center;">' . $appodate . '</td>
+                                                <td>
+                                                    <div style="display: flex; justify-content: center;">';
+                                
+                                        if ($isPastDate) {
+                                            // If scheduledate is past, display "Ended" button
+                                            echo '<button class="btn-primary-gray-disabled btn-disabled button-icon btn-ended" style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;border:1px solid #b0b0b0 !important; border-radius:5px;" disabled><font class="tn-in-text">Ended</font></button>';
+                                        } else {
+                                            // If scheduledate is in the future, display "Cancel" button
+                                            echo '<a href="?action=drop&id=' . $appoid . '&name=' . $pname . '&session=' . $title . '&apponum=' . $apponum . '" class="non-style-link">
+                                                    <button class="btn-primary-soft btn button-icon btn-delete" style="padding-left: 40px; padding-top: 12px; padding-bottom: 12px; margin-top: 10px;">
+                                                        <font class="tn-in-text">Cancel</font>
+                                                    </button>
+                                                </a>';
+                                        }
+                                
+                                        echo '</div>
+                                                </td>
+                                            </tr>';
                                     
                                 }
                             }

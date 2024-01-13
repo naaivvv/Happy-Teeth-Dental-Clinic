@@ -224,7 +224,13 @@
                             };
                         };
                     } else {
-                        $sqlmain = "SELECT appointment.appoid, schedule.scheduleid, schedule.title, doctor.docname, patient.pname, schedule.scheduledate, schedule.scheduletime, appointment.apponum, appointment.appodate FROM schedule INNER JOIN appointment ON schedule.scheduleid = appointment.scheduleid INNER JOIN patient ON patient.pid = appointment.pid INNER JOIN doctor ON schedule.docid = doctor.docid  ORDER BY schedule.scheduledate ASC";
+                        $sqlmain = "SELECT appointment.appoid, schedule.scheduleid, schedule.title, doctor.docname, patient.pname, schedule.scheduledate, schedule.scheduletime, appointment.apponum, appointment.appodate,
+                        DATEDIFF(schedule.scheduledate, CURDATE()) AS date_difference
+                        FROM schedule
+                        INNER JOIN appointment ON schedule.scheduleid = appointment.scheduleid
+                        INNER JOIN patient ON patient.pid = appointment.pid
+                        INNER JOIN doctor ON schedule.docid = doctor.docid
+                        ORDER BY CASE WHEN DATEDIFF(schedule.scheduledate, CURDATE()) >= 0 THEN 0 ELSE 1 END, date_difference ASC";
                     }
 
 
@@ -308,7 +314,7 @@
 
                                         // Check if appodate is greater than the current date
                                         $currentDate = date("Y-m-d");
-                                        $isBookingEnded = ($appodate < $currentDate);
+                                        $isBookingEnded = ($scheduledate < $currentDate);
 
                                         echo '<tr>
                                                 <td style="font-weight:600;"> &nbsp;' . substr($pname, 0, 25) . '</td>
