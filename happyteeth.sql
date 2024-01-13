@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2024 at 10:39 AM
+-- Generation Time: Jan 13, 2024 at 08:09 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -58,13 +58,10 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`) VALUES
-(1, 1, 1, 1, '2022-06-03'),
 (3, 1, 2, 1, '2024-01-15'),
 (4, 4, 3, 1, '2024-01-06'),
-(6, 1, 1, 10, '2024-01-11'),
 (7, 1, 4, 1, '2024-01-12'),
-(8, 1, 5, 1, '2024-01-12'),
-(9, 1, 1, 11, '2024-01-12');
+(21, 1, 1, 11, '2024-01-13');
 
 -- --------------------------------------------------------
 
@@ -86,8 +83,7 @@ CREATE TABLE `doctor` (
 --
 
 INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `doctel`, `specialties`) VALUES
-(1, 'doctor@happyteeth.com', 'Test Doctor', '123', '09321654987', 1),
-(3, 'testnew@happyfeet.com', 'testnew', '123', '09123456789', 1);
+(1, 'doctor@happyteeth.com', 'Test Doctor', '123', '09321654987', 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +108,7 @@ CREATE TABLE `patient` (
 INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pdob`, `ptel`) VALUES
 (1, 'patient@happyteeth.com', 'Test Patient', '123', 'Talisay City', '2000-01-01', '09789456123'),
 (3, 'test2@gmail.com', 'test2 test2', 'test2', 'test2', '2002-07-22', '0945612378'),
-(4, 'jasonp@gmail.com', 'Jason Pascual', 'jason', 'Catabla Baybay, Zone 3', '2002-01-01', '0712345678');
+(5, 'asd@test.com', 'asd asd', '123', 'asd', '2024-01-17', '09123456789');
 
 -- --------------------------------------------------------
 
@@ -135,9 +131,8 @@ CREATE TABLE `schedule` (
 
 INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`) VALUES
 (1, '1', 'Test Session', '2024-02-01', '18:00:00', 50),
-(11, '1', 'Test Individual', '2024-01-30', '20:00:00', 1),
-(9, '2', 'Sessioning', '2024-01-08', '14:13:00', 1),
-(10, '3', 'Dental Check ups', '2024-01-10', '09:00:00', 20);
+(12, '1', 'Test Individual 2', '2024-01-14', '15:35:00', 1),
+(11, '1', 'Test Individual', '2024-01-30', '20:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -185,7 +180,7 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('emhashenudara@gmail.com', 'p'),
 ('test2@gmail.com', 'p'),
 ('jasonp@gmail.com', 'p'),
-('testnew@happyfeet.com', 'd');
+('asd@test.com', 'p');
 
 --
 -- Indexes for dumped tables
@@ -245,7 +240,7 @@ ALTER TABLE `webuser`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -257,13 +252,13 @@ ALTER TABLE `doctor`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
