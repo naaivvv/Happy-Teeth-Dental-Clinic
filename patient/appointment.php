@@ -241,10 +241,10 @@
                                 $pastAppointments = [];
 
                                 foreach ($rows as $row) {
-                                    $appodate = $row["appodate"];
+                                    $scheduledate = $row["scheduledate"];
                                     $currentDate = date("Y-m-d");
 
-                                    if ($appodate >= $currentDate) {
+                                    if ($scheduledate >= $currentDate) {
                                         $futureAppointments[] = $row;
                                     } else {
                                         $pastAppointments[] = $row;
@@ -310,7 +310,7 @@
 
                                 // Check if appodate is greater than or equal to the current date
                                 $currentDate = date("Y-m-d");
-                                if ($appodate >= $currentDate) {
+                                if ($scheduledate >= $currentDate) {
                                     // Booking is still open
                                     $bookNowButton = '<a href="?action=drop&id='.$appoid.'&title='.$title.'&doc='.$docname.'"><button class="login-btn btn-primary-soft btn" style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Cancel Booking</font></button></a>';
                                     $label = '<div style="text-align: center; font-weight: bold; font-size: 14px; margin-bottom:5px;">Ongoing Booking</div>';
